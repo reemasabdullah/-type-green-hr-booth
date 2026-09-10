@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR بلمسة خضراء — فكرة البوث</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-dark:#1E2B22;
+    --bg-dark-2:#16201A;
+    --bg-cream:#F3EBD3;
+    --bg-cream-2:#ECE1BF;
+    --ink:#20261F;
+    --ink-soft:#4B5346;
+    --leaf:#5C7F52;
+    --leaf-deep:#3E5A38;
+    --gold:#C89B3C;
+    --clay:#A65A34;
+    --line: rgba(32,38,31,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg-cream);
+    color:var(--ink);
+    font-family:'Tajawal',sans-serif;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{margin:0;}
+  .display{font-family:'Amiri',serif;}
+  p{margin:0;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:radial-gradient(120% 90% at 15% 0%, #24352A 0%, var(--bg-dark) 45%, var(--bg-dark-2) 100%);
+    color:var(--bg-cream);
+    padding:88px 0 96px;
+    overflow:hidden;
+  }
+  .hero-veins{
+    position:absolute; inset:0; opacity:.35; pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:1;}
+  .eyebrow-leaf{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:14px; color:var(--gold); font-weight:700;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(38px,7vw,64px);
+    line-height:1.25;
+    font-weight:700;
+    color:#F7F2E2;
+    max-width:11ch;
+  }
+  .hero .accent{color:var(--gold);}
+  .hero-sub{
+    margin-top:22px;
+    font-size:18px;
+    color:#CFD8C6;
+    max-width:46ch;
+  }
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:34px;}
+  .pill{
+    border:1px solid rgba(247,242,226,.28);
+    color:#EDE6D0;
+    border-radius:999px;
+    padding:8px 18px;
+    font-size:14px;
+  }
+  .hero-credit{
+    margin-top:40px;
+    font-size:14px;
+    color:var(--gold);
+    font-weight:500;
+  }
+
+  /* ---------- SECTION BASE ---------- */
+  section{padding:76px 0;}
+  .section-head{max-width:56ch; margin-bottom:44px;}
+  .section-head h2{
+    font-size:clamp(26px,4vw,36px);
+    font-weight:800;
+    color:var(--leaf-deep);
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--ink-soft);
+    font-size:17px;
+  }
+
+  /* ---------- WHY GREEN HR ---------- */
+  .why-grid{
+    display:grid; grid-template-columns: 1.2fr .8fr; gap:40px; align-items:start;
+  }
+  .why-text p{color:var(--ink-soft); font-size:16.5px;}
+  .why-text p + p{margin-top:14px;}
+  .stat-stack{display:flex; flex-direction:column; gap:16px;}
+  .stat-card{
+    background:var(--bg-cream-2);
+    border-radius:4px;
+    border-right:3px solid var(--leaf);
+    padding:18px 20px;
+  }
+  .stat-card b{
+    display:block; font-size:26px; color:var(--leaf-deep); font-family:'Amiri',serif;
+  }
+  .stat-card span{font-size:14px; color:var(--ink-soft);}
+
+  /* ---------- GAME ---------- */
+  .game-section{background:var(--bg-dark); color:var(--bg-cream);}
+  .game-section .section-head h2{color:#F7F2E2;}
+  .game-section .section-head p{color:#C4CDBB;}
+  .score-line{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:22px; font-size:15px; color:#C4CDBB;
+  }
+  #score{color:var(--gold); font-weight:700;}
+  .card-grid{
+    display:grid; grid-template-columns:1fr; gap:14px;
+  }
+  .practice-card{
+    background:#243428;
+    border:1px solid rgba(247,242,226,.12);
+    border-radius:6px;
+    padding:18px 20px;
+    display:flex; flex-direction:column; gap:14px;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .practice-card.done{opacity:.45;}
+  .practice-card p{font-size:15.5px; color:#EDE6D0;}
+  .choice-row{display:flex; gap:10px;}
+  .choice-btn{
+    flex:1; cursor:pointer; border:none; border-radius:4px;
+    padding:10px 14px; font-family:'Tajawal',sans-serif; font-weight:700; font-size:14px;
+    transition:transform .15s ease;
+  }
+  .choice-btn:active{transform:scale(.97);}
+  .choice-btn.green{background:var(--leaf); color:#0F1A0F;}
+  .choice-btn.bad{background:#5C4033; color:#F3EBD3;}
+  .feedback{
+    font-size:13.5px; min-height:18px; color:var(--gold);
+  }
+  .feedback.wrong{color:#D98A6E;}
+
+  /* ---------- BOOTH ELEMENTS ---------- */
+  .elements-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:18px;
+  }
+  .element-card{
+    background:var(--bg-cream-2);
+    padding:24px;
+    border-radius:4px;
+    position:relative;
+  }
+  .element-card .leaf-icon{margin-bottom:14px;}
+  .element-card h3{font-size:17px; font-weight:800; color:var(--ink); margin-bottom:8px;}
+  .element-card p{font-size:14.5px; color:var(--ink-soft);}
+
+  /* ---------- CLOSING ---------- */
+  .closing{
+    background:linear-gradient(180deg, var(--bg-cream) 0%, #E7DAB4 100%);
+    border-top:1px solid var(--line);
+  }
+  .closing-inner{
+    display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;
+  }
+  .closing h2{font-size:clamp(24px,4vw,32px); color:var(--leaf-deep); font-weight:800;}
+  .closing p{color:var(--ink-soft); margin-top:14px; font-size:16px;}
+  .seed-box{
+    background:var(--bg-dark);
+    border-radius:6px;
+    padding:30px;
+    color:#EDE6D0;
+    text-align:center;
+  }
+  .seed-box .tag{font-size:13px; color:var(--gold); font-weight:700; margin-bottom:10px; display:block;}
+  .seed-box .card-title{font-family:'Amiri',serif; font-size:22px; margin-bottom:6px;}
+  .seed-box p{color:#C4CDBB; font-size:14px; margin-top:8px;}
+
+  footer{
+    text-align:center; padding:30px 0 50px; color:var(--ink-soft); font-size:13px;
+  }
+
+  @media (max-width:720px){
+    .why-grid, .closing-inner{grid-template-columns:1fr;}
+    .elements-grid{grid-template-columns:1fr;}
+    section{padding:56px 0;}
+    .hero{padding:64px 0 72px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <svg class="hero-veins" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+    <path d="M780 -20 C 620 60, 560 180, 600 320 C 630 420, 720 460, 800 500" stroke="#5C7F52" stroke-width="1.5" fill="none"/>
+    <path d="M700 -20 C 560 90, 520 210, 560 340" stroke="#5C7F52" stroke-width="1" fill="none" opacity=".6"/>
+    <path d="M650 40 C 600 100, 590 160, 620 220" stroke="#C89B3C" stroke-width="1" fill="none" opacity=".5"/>
+    <path d="M60 500 C 140 420, 120 320, 40 260" stroke="#5C7F52" stroke-width="1.2" fill="none" opacity=".5"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <span class="eyebrow-leaf">🌿 بوث موضوعات مختارة — إدارة الموارد البشرية</span>
+    <h1 class="display">HR بلمسة <span class="accent">خضراء</span></h1>
+    <p class="hero-sub">فكرة بوث تفاعلي عن إدارة الموارد البشرية الخضراء مبنية على فصل «إدارة البيئة الخضراء في الموارد البشرية» من مقرر موضوعات مختارة.</p>
+    <div class="pill-row">
+      <span class="pill">هوية بصرية طبيعية</span>
+      <span class="pill">نشاط تفاعلي</span>
+      <span class="pill">ربط برؤية 2030</span>
+    </div>
+    <p class="hero-credit">إعداد الطالبة ريماس عبدالله الحواس</p>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="why-grid">
+      <div class="why-text">
+        <div class="section-head" style="margin-bottom:20px;">
+          <h2>ليه هذا الموضوع بالذات؟</h2>
+        </div>
+        <p>الاستدامة صارت جزء أساسي من قرارات الشركات ومن ضمنها القرارات المتعلقة بالموظفين: كيف تُوظّف وكيف تدرّب وكيف تدير بيئة العمل اليومية.</p>
+        <p>إدارة الموارد البشرية الخضراء تعني ببساطة إعادة تصميم ممارسات القسم — من التوظيف إلى التقييم — بحيث تقلل الأثر البيئي وتبني ثقافة مسؤولة داخل الشركة.</p>
+        <p>وبما إنه موضوع مرتبط بمبادرات وطنية فعلية، يعطي البوث عمق يتجاوز الشرح النظري.</p>
+      </div>
+      <div class="stat-stack">
+        <div class="stat-card">
+          <b>2030</b>
+          <span>رؤية السعودية تضع الاستدامة ضمن أولويات التحول في قطاعات متعددة، ومنها بيئة العمل.</span>
+        </div>
+        <div class="stat-card">
+          <b>٥ ممارسات</b>
+          <span>تكفي لتحويل قسم موارد بشرية تقليدي إلى قسم أكثر استدامة، بدون تكلفة كبيرة.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="game-section" id="game">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>جرب بنفسك: أخضر ولا لأ؟</h2>
+      <p>هذا نشاط مصغّر من نفس فكرة النشاط اللي راح يكون داخل البوث. اضغطي على كل ممارسة وحددي تصنيفها.</p>
+    </div>
+    <div class="score-line">
+      <span>النتيجة: <span id="score">0</span> من 6</span>
+      <span id="resetBtn" style="cursor:pointer; text-decoration:underline;">إعادة اللعبة</span>
+    </div>
+    <div class="card-grid" id="cardGrid"></div>
+  </div>
+</section>
+
+<section id="elements">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>وش تشرح الطالبة داخل البوث؟</h2>
+      <p>أربعة محاور تغطي الموضوع من التعريف إلى التطبيق، بدون ما تطول أو تصير محاضرة.</p>
+    </div>
+    <div class="elements-grid">
+      <div class="element-card">
+        <svg class="leaf-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 17 4 9C4 5 7 3 12 3C17 3 20 5 20 9C20 17 12 21 12 21Z" stroke="#5C7F52" stroke-width="1.6"/><path d="M12 21V9" stroke="#5C7F52" stroke-width="1.6"/></svg>
+        <h3>وش يعني Green HR</h3>
+        <p>تعريف مبسّط للمفهوم وليش تحول من فكرة اختيارية إلى أولوية في كثير من الشركات محلياً وعالمياً.</p>
+      </div>
+      <div class="element-card">
+        <svg class="leaf-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 17 4 9C4 5 7 3 12 3C17 3 20 5 20 9C20 17 12 21 12 21Z" stroke="#5C7F52" stroke-width="1.6"/><path d="M12 21V9" stroke="#5C7F52" stroke-width="1.6"/></svg>
+        <h3>أمثلة عملية</h3>
+        <p>توظيف إلكتروني وتقليل الطباعة وبرامج عمل هجين ومبادرات مشابهة تطبقها شركات سعودية وعالمية.</p>
+      </div>
+      <div class="element-card">
+        <svg class="leaf-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 17 4 9C4 5 7 3 12 3C17 3 20 5 20 9C20 17 12 21 12 21Z" stroke="#5C7F52" stroke-width="1.6"/><path d="M12 21V9" stroke="#5C7F52" stroke-width="1.6"/></svg>
+        <h3>الرابط برؤية 2030</h3>
+        <p>كيف تتقاطع ممارسات الموارد البشرية الخضراء مع مبادرة السعودية الخضراء وأهداف التحول الوطني.</p>
+      </div>
+      <div class="element-card">
+        <svg class="leaf-icon" width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 17 4 9C4 5 7 3 12 3C17 3 20 5 20 9C20 17 12 21 12 21Z" stroke="#5C7F52" stroke-width="1.6"/><path d="M12 21V9" stroke="#5C7F52" stroke-width="1.6"/></svg>
+        <h3>دور قسم الموارد البشرية</h3>
+        <p>غرس ثقافة الاستدامة عبر التدريب والحوافز الخضراء وإدخال معايير بيئية ضمن تقييم الأداء.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap closing-inner">
+    <div>
+      <h2>لمسة يتذكرها الزوار</h2>
+      <p>بطاقة صغيرة على شكل ورقة نبات توزّع على زوار البوث فيها خمس نصائح مختصرة لموظف أخضر — شيء ملموس ياخذونه معهم بعد ما يمرون من عندنا.</p>
+    </div>
+    <div class="seed-box">
+      <span class="tag">بطاقة الزوار</span>
+      <div class="card-title">٥ نصائح لموظف أخضر</div>
+      <p>وجهين على ورق مقوى بسيط بتصميم يشبه شكل الورقة — يوزّع مع أو بدون بذرة صغيرة.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>إعداد الطالبة ريماس عبدالله الحواس</p>
+  <p style="margin-top:6px;">فكرة بوث — إدارة البيئة الخضراء في الموارد البشرية — مقرر موضوعات مختارة</p>
+</footer>
+
+<script>
+  const practices = [
+    { text: "طباعة جميع العقود والنماذج ورقياً لكل موظف جديد", green: false },
+    { text: "اعتماد التوقيع الإلكتروني على المستندات الرسمية", green: true },
+    { text: "برنامج عمل هجين يقلل التنقل اليومي للموظفين", green: true },
+    { text: "طباعة نسخة ورقية من كل تقييم أداء سنوي وأرشفتها يدوياً", green: false },
+    { text: "تدريب الموظفين الجدد عبر منصة رقمية بدل الكتيبات المطبوعة", green: true },
+    { text: "اجتماعات حضورية إلزامية لكل قرار بسيط داخل القسم", green: false },
+  ];
+
+  const grid = document.getElementById('cardGrid');
+  const scoreEl = document.getElementById('score');
+  let score = 0;
+
+  function render(){
+    grid.innerHTML = '';
+    score = 0;
+    scoreEl.textContent = score;
+    practices.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'practice-card';
+      card.id = 'card-' + i;
+      card.innerHTML = `
+        <p>${p.text}</p>
+        <div class="choice-row">
+          <button class="choice-btn green" data-answer="true">أخضر</button>
+          <button class="choice-btn bad" data-answer="false">غير مستدام</button>
+        </div>
+        <div class="feedback"></div>
+      `;
+      const [btnGreen, btnBad] = card.querySelectorAll('.choice-btn');
+      const feedback = card.querySelector('.feedback');
+      [btnGreen, btnBad].forEach(btn => {
+        btn.addEventListener('click', () => {
+          if(card.classList.contains('done')) return;
+          const answer = btn.dataset.answer === 'true';
+          if(answer === p.green){
+            feedback.textContent = 'صح! هذي ممارسة أخضر فعلاً.';
+            feedback.classList.remove('wrong');
+            score++;
+            scoreEl.textContent = score;
+          } else {
+            feedback.textContent = p.green ? 'في الحقيقة هذي ممارسة أخضر.' : 'في الحقيقة هذي ممارسة غير مستدامة.';
+            feedback.classList.add('wrong');
+          }
+          card.classList.add('done');
+          btnGreen.disabled = true;
+          btnBad.disabled = true;
+        });
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', render);
+  render();
+</script>
+
+</body>
+</html>
